@@ -32,7 +32,6 @@ namespace OnlyGoldBars
 
             foreach (var item in newLevel.spawnableScrap)
             {
-                //mls.LogInfo("ITEM: " + item.spawnableItem.itemName);
                 item.rarity = 0;
                 if (item.spawnableItem.itemName == "Gold bar")
                 {
