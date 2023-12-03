@@ -28,7 +28,6 @@ namespace OnlyGoldBars
         [HarmonyPrefix]
         static bool Only_Gold_Bars(ref SelectableLevel newLevel)
         {
-            HUDManager.Instance.AddTextToChatOnServer("<color=red>All items are gold bars</color>");
 
             foreach (var item in newLevel.spawnableScrap)
             {
