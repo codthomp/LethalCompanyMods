@@ -4,6 +4,6 @@ namespace OnlyGoldBars
     {
         public const string PLUGIN_GUID = "OnlyGoldBars";
         public const string PLUGIN_NAME = "OnlyGoldBars";
-        public const string PLUGIN_VERSION = "1.0.0";
+        public const string PLUGIN_VERSION = "1.0.1";
     }
 }

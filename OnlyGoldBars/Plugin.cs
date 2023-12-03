@@ -10,7 +10,7 @@ namespace OnlyGoldBars
         public static bool loaded;
         private const string modGUID = "Alphonso.OnlyGoldBars";
         private const string modName = "OnlyGoldBars";
-        private const string modVersion = "1.0.0";
+        private const string modVersion = "1.0.1";
 
         private readonly Harmony harmony = new Harmony(modGUID);
         private static OnlyGoldBars Instance;
@@ -26,7 +26,7 @@ namespace OnlyGoldBars
 
         [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.LoadNewLevel))]
         [HarmonyPrefix]
-        static bool ModifyLevel(ref SelectableLevel newLevel)
+        static bool Only_Gold_Bars(ref SelectableLevel newLevel)
         {
             HUDManager.Instance.AddTextToChatOnServer("<color=red>All items are gold bars</color>");
 
