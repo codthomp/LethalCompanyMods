@@ -1,14 +1,46 @@
-﻿using BepInEx;
+using BepInEx;
+using BepInEx.Logging;
+using HarmonyLib;
 
-namespace LethalCompanyTemplate
+namespace OnlyGoldBars
 {
-    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-    public class Plugin : BaseUnityPlugin
+    [BepInPlugin(modGUID, modName, modVersion)]
+    public class OnlyGoldBars : BaseUnityPlugin
     {
+        public static bool loaded;
+        private const string modGUID = "Alphonso.OnlyGoldBars";
+        private const string modName = "OnlyGoldBars";
+        private const string modVersion = "1.0.0";
+
+        private readonly Harmony harmony = new Harmony(modGUID);
+        private static OnlyGoldBars Instance;
+        public static ManualLogSource mls;
         private void Awake()
         {
+            mls = BepInEx.Logging.Logger.CreateLogSource("OnlyGoldBars");
             // Plugin startup logic
-            Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+            mls.LogInfo("Loaded OnlyGoldBars and applying patches.");
+            harmony.PatchAll(typeof(OnlyGoldBars));
+            mls = Logger;
         }
+
+        [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.LoadNewLevel))]
+        [HarmonyPrefix]
+        static bool ModifyLevel(ref SelectableLevel newLevel)
+        {
+            HUDManager.Instance.AddTextToChatOnServer("<color=red>All items are gold bars</color>");
+
+            foreach (var item in newLevel.spawnableScrap)
+            {
+                //mls.LogInfo("ITEM: " + item.spawnableItem.itemName);
+                item.rarity = 0;
+                if (item.spawnableItem.itemName == "Gold bar")
+                {
+                    item.rarity = 999;
+                }
+            }
+            return true;
+        }
+
     }
 }
